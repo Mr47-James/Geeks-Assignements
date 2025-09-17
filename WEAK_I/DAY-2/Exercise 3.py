@@ -13,7 +13,7 @@ print(f"The Zara Targeted Clients Are {brand.get('type_of_clothes')}")
 
 brand["country_creation"] = "Spain"
 
-if "international_competitors" in brand:   # ✅ check if key exists
+if "international_competitors" in brand:   
     brand["international_competitors"] = "Desigual"
     brand.pop("create_date")  
     print(brand["international_competitors"])
