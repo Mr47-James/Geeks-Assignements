@@ -1,28 +1,59 @@
 import random
 
-def main():
-    x = get_random_temp()
-    print(f"the current room temperature in (c): {x}c")
-    if x < 0:
-        print("Brrr, that’s freezing! Wear some extra layers today")
-    elif 0<x<=16:
-        print("Quite chilly! Don’t forget your coat")
-    elif 16<x<=23:
-        print("Today's temperature is balanced! wear some spring lite clothes")
-    elif 24<x<=32:
-        print("Ahhh, today is hot!keep hidrated, lite wearing")
-    elif 32<x<=40:
-        print("ahhh, thats insane, send me a post card from heaven")
-def get_random_temp(season):
-    gen = random.randint(-10, 40)
-    match gen:
-        case G if -10 < G <= 16:
-            print("These is Winter")
-        case G if 16 < G <= 23:
-            print("These is Autumn")
-        case G if 23 < G <= 32:
-            print("These is Spring")
-        case G if 32 < G <= 40:
-            print("These is Summer")
-            
+def get_random_temp(season=None):
+    """Return a random temperature depending on season"""
+    if season == "winter":
+        return random.uniform(-10, 16)   
+    elif season == "spring":
+        return random.uniform(16, 23)    
+    elif season == "summer":
+        return random.uniform(24, 40)    
+    elif season == "autumn" or season == "fall":
+        return random.uniform(16, 23)    
+    else:
+        # Default: full range
+        return random.uniform(-10, 40)
 
+
+def month_to_season(month: int):
+    """Map month number to season"""
+    if month in (12, 1, 2):
+        return "winter"
+    elif month in (3, 4, 5):
+        return "spring"
+    elif month in (6, 7, 8):
+        return "summer"
+    elif month in (9, 10, 11):
+        return "autumn"
+
+
+def main():
+    
+    choice = input("Do you want to enter a season or month? (s/m): ").strip().lower()
+    
+    if choice == "m":
+        month = int(input("Enter month number (1–12): "))
+        season = month_to_season(month)
+    else:
+        season = input("Enter a season (winter, spring, summer, autumn): ").strip().lower()
+
+    temp = get_random_temp(season)
+    print(f"\nThe temperature right now is {temp:.1f}°C")
+
+    
+    if temp < 0:
+        print("Brrr, that’s freezing! Wear some extra layers today")
+    elif 0 <= temp <= 16:
+        print("Quite chilly! Don’t forget your coat")
+    elif 16 < temp <= 23:
+        print("Nice weather! Maybe bring a light jacket")
+    elif 24 <= temp <= 32:
+        print("Warm day! Keep hydrated and wear light clothes")
+    elif 32 < temp <= 40:
+        print("That’s insane, send me a postcard from heaven")
+    else:
+        print("Unusual temperature range detected!")
+
+
+
+main()
