@@ -1,23 +1,29 @@
 import random
+
 def throw_dice():
+    """Simulate throwing two dice and return their values as a tuple."""
     dice1 = random.randint(1, 6)
     dice2 = random.randint(1, 6)
-    dice_times = 0
-    History = []
+    return dice1, dice2
+
+def throw_until_doubles(max_doubles=100):
+    throws = 0
     doubles = 0
-def throw_until_doubles():
-    while dice1 != dice2:
-        while doubles <= 100:
-            throw_dice()
-            dice_times += 1
-            if dice1 == dice2:    
-                doubles += 1
-            History.append((dice1, dice2))
-            print(f"\n[*]Rolls: {dice_times} ::: {dice1} :: {dice2} ::: {doubles}")
-        return print(f"it took {dice_times} throws to reach a 100 doubles")
-        print(f"the average number of throws is: {}")
-    return History
-        
-    
-#throw_until_doubles = lambda : 
-throw_dice()
+    combinations = []  
+    throws_to_doubles = []  
+    while doubles < max_doubles:
+        dice1, dice2 = throw_dice()
+        throws += 1
+        combinations.append((dice1, dice2))
+
+        if dice1 == dice2:  
+            doubles += 1
+            throws_to_doubles.append(throws) 
+            print(f"Double #{doubles} caught: {dice1}, {dice2} after {throws} throws")
+
+    average = sum(throws_to_doubles) / len(throws_to_doubles)
+
+    print(f"\nTotal throws: {throws}")
+    print(f"\nAverage throws to reach doubles: {average:.2f}")
+
+throw_until_doubles()
