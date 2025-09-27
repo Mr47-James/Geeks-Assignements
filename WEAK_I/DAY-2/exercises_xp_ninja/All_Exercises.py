@@ -25,6 +25,10 @@ print(f"[*] Brands List: {Brand}")
 print(f"[*] Total Number of Manufacturers:  {len(Brand)}")
 
 # Exercise 2 XP NINJA
+def get_full_name(first_name, last_name, middle_name=None):
+    print(f"{first_name} {middle_name or ''} {last_name}")
+get_full_name("John", "lee") # Way number 1
+get_full_name(first_name="john", middle_name="hooker", last_name="lee") # Way number 2
 
 # Exercise 3 XP NINJA
 
