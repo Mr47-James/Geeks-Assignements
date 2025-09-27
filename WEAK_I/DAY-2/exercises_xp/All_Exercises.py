@@ -98,32 +98,16 @@ def f1():
         print(f"\m[*] Congratulations, you won the lottery !!!\n{i}-{x}")    
 f1()
 # Exercise 6
-# NOTE THESE SCRIPT IS UPGRADED IT TAKES THE USER INPUT FOR BETTER HANDLING AND, THE FUNCTION CALL DOESN'T NEED TO BE CALLED WITH THE KEYWORD ARGS, SINCE THE FUNCTION INTERNALLY PARSES THE USER COMMANDS.
+def make_shirt(size="L", text="I love Python"):
+    print(f"The size of the shirt is {size} and the text is '{text}'.")
 
-def make_shirt(size=None, text=None):
-    
-    if size is None:
-        size = input("Put in your size (default L): ") or "L"
-    
-    if text is None:
-        text = input("Put in your text (default 'I love Python'): ") or "I love Python"
+make_shirt()
 
-    
-    if size == "L":
-        print("\nDefault Size chosen: L")
-    else:
-        print(f"\nSize Chosen: {size}")
+make_shirt("M")
 
-    if text == "I love Python":
-        print("\nText Chosen is: I love Python")
-    else:
-        print(f"\nText Chosen is: {text}")
+make_shirt("S", "Hello World!")
 
-    print(f"\nThe size of the shirt is {size} and the text is {text}")    
-
-
-make_shirt()                     
-      
+make_shirt(size="XL", text="Code > Sleep")
 
 # Exercise 7
 import random
