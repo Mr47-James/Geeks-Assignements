@@ -1,74 +1,57 @@
 data = [
-    {
-        "question": "What is Baby Yoda's real name?",
-        "answer": "Grogu"
-    },
-    {
-        "question": "Where did Obi-Wan take Luke after his birth?",
-        "answer": "Tatooine"
-    },
-    {
-        "question": "What year did the first Star Wars movie come out?",
-        "answer": "1977"
-    },
-    {
-        "question": "Who built C-3PO?",
-        "answer": "Anakin Skywalker"
-    },
-    {
-        "question": "Anakin Skywalker grew up to be who?",
-        "answer": "Darth Vader"
-    },
-    {
-        "question": "What species is Chewbacca?",
-        "answer": "Wookiee"
-    }
+    {"question": "What is Baby Yoda's real name?", "answer": "Grogu"},
+    {"question": "Where did Obi-Wan take Luke after his birth?", "answer": "Tatooine"},
+    {"question": "What year did the first Star Wars movie come out?", "answer": "1977"},
+    {"question": "Who built C-3PO?", "answer": "Anakin Skywalker"},
+    {"question": "Anakin Skywalker grew up to be who?", "answer": "Darth Vader"},
+    {"question": "What species is Chewbacca?", "answer": "Wookiee"}
 ]
 
-WrongList = []
-Correct_Answers = 0
-Incorrect_Answers = 0   # fixed spelling (was Inorrect_Answers)
-Global_Score = 0
+def run_quiz():
+    correct = 0
+    incorrect = 0
+    wrong_answers = []
 
-def asker():
-    global Correct_Answers, Incorrect_Answers, WrongList, Global_Score
-    for Ques in data:
-        x = input(Ques["question"] + " ").strip()
-        if x == Ques["answer"].lower():
-            Correct_Answers += 1
-            print(f"\nCongratulations your answer is correct\n{Ques['answer']}")
+    for item in data:
+        user_answer = input(item["question"] + " ").strip()
+
+        if user_answer.lower() == item["answer"].lower():
+            print("✅ Correct!")
+            correct += 1
         else:
-            Incorrect_Answers += 1
-            print(f"\nYour answer is not correct: {x}\n{Ques['answer']}")
-            WrongList.append(x)
+            print("❌ Wrong!")
+            incorrect += 1
+            wrong_answers.append({
+                "question": item["question"],
+                "your_answer": user_answer,
+                "correct_answer": item["answer"]
+            })
 
-    Global_Score = Correct_Answers * 100 / len(data)
-    informer()
+    show_results(correct, incorrect, wrong_answers)
 
-def informer():
-    global Correct_Answers, Incorrect_Answers, Global_Score, WrongList
-    print(f"Correct_Answers: {Correct_Answers}")
-    print(f"Incorrect_Answers: {Incorrect_Answers}")
-    print(f"Global_Score: {Global_Score}\n")
-          
-    if Correct_Answers > Incorrect_Answers:
-        for i in WrongList:
-            print(f"\n{i}")   # fixed undefined Ques + strip misuse
-        print("(+++++You WIN+++++)\n")
-    elif Correct_Answers < Incorrect_Answers:
-        for i in WrongList:
-            print(f"\n{i}")
-        print("(-----You LOOSE-----)\n")
-    elif Correct_Answers == Incorrect_Answers:
-        for i in WrongList:
-            print(f"\n{i}")
-        print("(-----Nicely Done-----)\n")
-        Q = input("Do you want to play again (Y/N): ").strip().lower()
-        if Q == "y":
-            asker()
-        elif Q == "n":
-            return
+
+def show_results(correct, incorrect, wrong_answers):
+    print("\n--- QUIZ RESULTS ---")
+    print(f"Correct answers: {correct}")
+    print(f"Incorrect answers: {incorrect}")
+
+    if wrong_answers:
+        print("\nHere are the questions you missed:")
+        for w in wrong_answers:
+            print(f"- {w['question']}")
+            print(f"  Your answer: {w['your_answer']}")
+            print(f"  Correct answer: {w['correct_answer']}\n")
+
+
+    if incorrect > 3:
+        play_again = input("You had more than 3 wrong answers 😬. Do you want to play again? (yes/no): ").lower()
+        if play_again == "yes":
+            run_quiz()
+        else:
+            print("Thanks for playing!")
     else:
-        pass
+        print("Great job, you did well! 🌟")
 
-asker()
+
+
+run_quiz()
