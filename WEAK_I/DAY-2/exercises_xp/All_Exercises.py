@@ -172,65 +172,63 @@ main()
 
 # Exercise 8 
 
-import random
+data = [
+    {"question": "What is Baby Yoda's real name?", "answer": "Grogu"},
+    {"question": "Where did Obi-Wan take Luke after his birth?", "answer": "Tatooine"},
+    {"question": "What year did the first Star Wars movie come out?", "answer": "1977"},
+    {"question": "Who built C-3PO?", "answer": "Anakin Skywalker"},
+    {"question": "Anakin Skywalker grew up to be who?", "answer": "Darth Vader"},
+    {"question": "What species is Chewbacca?", "answer": "Wookiee"}
+]
 
-def get_random_temp(season=None):
-    """Return a random temperature depending on season"""
-    if season == "winter":
-        return random.uniform(-10, 16)   
-    elif season == "spring":
-        return random.uniform(16, 23)    
-    elif season == "summer":
-        return random.uniform(24, 40)    
-    elif season == "autumn" or season == "fall":
-        return random.uniform(16, 23)    
+def run_quiz():
+    correct = 0
+    incorrect = 0
+    wrong_answers = []
+
+    for item in data:
+        user_answer = input(item["question"] + " ").strip()
+
+        if user_answer.lower() == item["answer"].lower():
+            print("✅ Correct!")
+            correct += 1
+        else:
+            print("❌ Wrong!")
+            incorrect += 1
+            wrong_answers.append({
+                "question": item["question"],
+                "your_answer": user_answer,
+                "correct_answer": item["answer"]
+            })
+
+    show_results(correct, incorrect, wrong_answers)
+
+
+def show_results(correct, incorrect, wrong_answers):
+    print("\n--- QUIZ RESULTS ---")
+    print(f"Correct answers: {correct}")
+    print(f"Incorrect answers: {incorrect}")
+
+    if wrong_answers:
+        print("\nHere are the questions you missed:")
+        for w in wrong_answers:
+            print(f"- {w['question']}")
+            print(f"  Your answer: {w['your_answer']}")
+            print(f"  Correct answer: {w['correct_answer']}\n")
+
+
+    if incorrect > 3:
+        play_again = input("You had more than 3 wrong answers 😬. Do you want to play again? (yes/no): ").lower()
+        if play_again == "yes":
+            run_quiz()
+        else:
+            print("Thanks for playing!")
     else:
-        # Default: full range
-        return random.uniform(-10, 40)
-
-
-def month_to_season(month: int):
-    """Map month number to season"""
-    if month in (12, 1, 2):
-        return "winter"
-    elif month in (3, 4, 5):
-        return "spring"
-    elif month in (6, 7, 8):
-        return "summer"
-    elif month in (9, 10, 11):
-        return "autumn"
-
-
-def main():
-    
-    choice = input("Do you want to enter a season or month? (s/m): ").strip().lower()
-    
-    if choice == "m":
-        month = int(input("Enter month number (1–12): "))
-        season = month_to_season(month)
-    else:
-        season = input("Enter a season (winter, spring, summer, autumn): ").strip().lower()
-
-    temp = get_random_temp(season)
-    print(f"\nThe temperature right now is {temp:.1f}°C")
-
-    
-    if temp < 0:
-        print("Brrr, that’s freezing! Wear some extra layers today")
-    elif 0 <= temp <= 16:
-        print("Quite chilly! Don’t forget your coat")
-    elif 16 < temp <= 23:
-        print("Nice weather! Maybe bring a light jacket")
-    elif 24 <= temp <= 32:
-        print("Warm day! Keep hydrated and wear light clothes")
-    elif 32 < temp <= 40:
-        print("That’s insane, send me a postcard from heaven")
-    else:
-        print("Unusual temperature range detected!")
+        print("Great job, you did well! 🌟")
 
 
 
-main()
+run_quiz()
 
 
     
