@@ -1,0 +1,4 @@
+Q1:  0
+Q2:  All rows of FirstTab except possibly those with id=5.
+Q3:  0 if SecondTab.id has NULL, otherwise = rows in FirstTab not in SecondTab.
+Q4:  Rows in FirstTab not present in SecondTab (ignoring NULLs).
