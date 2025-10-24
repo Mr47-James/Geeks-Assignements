@@ -1,4 +1,3 @@
-Here’s the analysis for Exercise 1: Analyzing the map method:
 
 [1, 2, 3].map(num => {
   if (typeof num === 'number') return num * 2;
