@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Form to JSON</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        form { margin-bottom: 20px; }
+        input { margin: 5px 0; display: block; }
+        #output { white-space: pre-wrap; background: #f0f0f0; padding: 10px; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Submit Your Name</h1>
+    <form id="userForm">
+        <input type="text" id="firstName" placeholder="First Name" required>
+        <input type="text" id="lastName" placeholder="Last Name" required>
+        <button type="submit">Send</button>
+    </form>
+
+    <h2>Submitted Data:</h2>
+    <section id="output"></section>
+
+    <script src="form.js"></script>
+</body>
+</html>
