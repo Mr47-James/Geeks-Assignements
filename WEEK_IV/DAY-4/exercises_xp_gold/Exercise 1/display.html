@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Data</title>
+</head>
+<body>
+    <h1>Submitted Data</h1>
+    <section id="displaySection"></section>
+
+    <script>
+        // Retrieve query parameters from the URL
+        const params = new URLSearchParams(window.location.search);
+        const fname = params.get("fname");
+        const lname = params.get("lname");
+
+        // Display the data in the section tag
+        const displaySection = document.getElementById("displaySection");
+        displaySection.textContent = `First Name: ${fname}, Last Name: ${lname}`;
+    </script>
+</body>
+</html>
