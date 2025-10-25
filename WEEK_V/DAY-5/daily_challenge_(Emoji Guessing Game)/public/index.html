@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emoji Guessing Game</title>
+</head>
+<body>
+    <h1>Emoji Guessing Game</h1>
+    <input type="text" id="playerName" placeholder="Enter your name" />
+    <div id="game">
+        <h2 id="emoji"></h2>
+        <form id="guessForm">
+            <div id="options"></div>
+            <button type="submit">Submit Guess</button>
+        </form>
+        <p id="feedback"></p>
+        <p>Score: <span id="score">0</span></p>
+    </div>
+    <h2>Leaderboard</h2>
+    <ul id="leaderboard"></ul>
+
+    <script>
+        let currentEmoji = '';
+        let playerName = '';
+
+        async function loadEmoji() {
+            const res = await fetch('/emoji');
+            const data = await res.json();
+            currentEmoji = data.emoji;
+
+            document.getElementById('emoji').textContent = currentEmoji;
+
+            const optionsDiv = document.getElementById('options');
+            optionsDiv.innerHTML = '';
+            data.options.forEach(option => {
+                const label = document.createElement('label');
+                label.innerHTML = `<input type="radio" name="guess" value="${option}"> ${option}`;
+                optionsDiv.appendChild(label);
+                optionsDiv.appendChild(document.createElement('br'));
+            });
+        }
+
+        async function submitGuess(event) {
+            event.preventDefault();
+            playerName = document.getElementById('playerName').value || 'Anonymous';
+            const guess = document.querySelector('input[name="guess"]:checked')?.value;
+
+            if (!guess) return alert('Please select an option!');
+
+            const res = await fetch('/guess', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ emoji: currentEmoji, guess, player: playerName })
+            });
+
+            const result = await res.json();
+            document.getElementById('feedback').textContent = result.isCorrect ? 'Correct!' : `Wrong! Correct answer: ${result.correctAnswer}`;
+            document.getElementById('score').textContent = result.score;
+
+            loadEmoji();
+            updateLeaderboard();
+        }
+
+        async function updateLeaderboard() {
+            const res = await fetch('/leaderboard');
+            const data = await res.json();
+            const leaderboardUl = document.getElementById('leaderboard');
+            leaderboardUl.innerHTML = '';
+            data.forEach(player => {
+                const li = document.createElement('li');
+                li.textContent = `${player.name}: ${player.score}`;
+                leaderboardUl.appendChild(li);
+            });
+        }
+
+        document.getElementById('guessForm').addEventListener('submit', submitGuess);
+
+        loadEmoji();
+        updateLeaderboard();
+    </script>
+</body>
+</html>
